@@ -1,61 +1,50 @@
 'use client';
 
-import { useState } from 'react';
+import { ServiceCategory } from '@/types/services';
+import { useCallback } from 'react';
 
-export default function SearchFilter({ 
-  onSearch 
-}: { 
-  onSearch?: (search: string, category: string) => void 
-}) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [category, setCategory] = useState('all');
+interface SearchFilterProps {
+  onSearch: (query: string) => void;
+  onCategoryChange: (category: string) => void;
+  categories: ServiceCategory[];
+}
 
-  const handleSearch = (value: string) => {
-    setSearchTerm(value);
-    onSearch?.(value, category);
-  };
+export default function SearchFilter({ onSearch, onCategoryChange, categories }: SearchFilterProps) {
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    onSearch(e.target.value);
+  }, [onSearch]);
 
-  const handleCategoryChange = (value: string) => {
-    setCategory(value);
-    onSearch?.(searchTerm, value);
-  };
+  const handleCategoryChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    onCategoryChange(e.target.value);
+  }, [onCategoryChange]);
 
   return (
-    <div className="bg-white dark:bg-gray-800 shadow-sm mb-6 p-4">
-      <div className="max-w-4xl mx-auto flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <input
-          type="text"
-          placeholder="ابحث عن خدمة..."
-          className="p-2 border dark:border-gray-600 rounded-md w-full sm:w-64 text-sm sm:text-base
-                     bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
-                     placeholder-gray-500 dark:placeholder-gray-400"
-          value={searchTerm}
-          onChange={(e) => handleSearch(e.target.value)}
-        />
-        <select
-          className="p-2 border dark:border-gray-600 rounded-md w-full sm:w-48 text-sm sm:text-base
-                     bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-          value={category}
-          onChange={(e) => handleCategoryChange(e.target.value)}
-        >
-          <option value="all">كل الخدمات</option>
-          <option value="pharmacies">صيدليات</option>
-          <option value="restaurants">مطاعم</option>
-          <option value="supermarkets">سوبر ماركت</option>
-          <option value="vegetables">خضار وفاكهة</option>
-          <option value="butcher">جزارة</option>
-          <option value="birds">طيور</option>
-          <option value="plumbing">أنابيب</option>
-          <option value="laundry">مكوى ومغسلة</option>
-          <option value="maintenance">صيانة</option>
-          <option value="electrician">كهرباء</option>
-          <option value="cleaning">تنظيف</option>
-          <option value="carwash">غسيل سيارات</option>
-          <option value="landscaping">لاند سكيب</option>
-          <option value="moving">ورش عفش</option>
-          <option value="emergency">طوارئ</option>
-        </select>
-      </div>
+    <div className="mb-6 w-full max-w-2xl mx-auto space-y-4">
+      <input
+        type="text"
+        placeholder="ابحث عن خدمة..."
+        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
+                   bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400
+                   placeholder-gray-500 dark:placeholder-gray-400 font-amiri"
+        onChange={handleSearchChange}
+        dir="rtl"
+      />
+      <select
+        onChange={handleCategoryChange}
+        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
+                   bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400
+                   font-amiri"
+        dir="rtl"
+      >
+        <option value="all">كل الخدمات</option>
+        {categories.map((category) => (
+          <option key={category.id} value={category.id}>
+            {category.name}
+          </option>
+        ))}
+      </select>
     </div>
   );
 } 

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from 'next/link';
 import "./globals.css";
+import { Amiri } from 'next/font/google';
+
+const amiri = Amiri({ subsets: ['arabic'], weight: ['400', '700'] });
 
 export const metadata: Metadata = {
   title: "موقع الأندلس",
@@ -14,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl" className="light">
-      <body className="bg-gray-50 dark:bg-gray-900">
+      <body className={amiri.className}>
         <header className="bg-slate-800 dark:bg-gray-950 text-white p-4">
           <nav className="max-w-6xl mx-auto">
             <ul className="flex justify-center gap-8">

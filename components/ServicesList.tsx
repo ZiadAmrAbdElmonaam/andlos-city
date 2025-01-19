@@ -2,74 +2,26 @@
 
 import { useState } from 'react';
 import { servicesData } from '@/data/services';
-import SearchFilter from './SearchFilter';
+import SearchBar from './SearchBar';
 import { ServiceCategory, Service } from '@/types/services';
 import { FaPhone } from 'react-icons/fa6';
+import SearchFilter from './SearchFilter';
 
 export default function ServicesList() {
   const [filteredData, setFilteredData] = useState<ServiceCategory[]>(servicesData);
   const [uncategorizedServices, setUncategorizedServices] = useState<Service[]>([]);
-  
-  const handleSearch = (searchTerm: string, category: string) => {
-    let filtered = [...servicesData];
-    let uncategorized: Service[] = [];
-    
-    // Filter by category
-    if (category !== 'all') {
-      filtered = filtered.filter(cat => cat.id === category);
-    } else {
-      // Check for services that don't match any category
-      const allCategoryIds = servicesData.map(cat => cat.id);
-      uncategorized = servicesData
-        .flatMap(cat => cat.services)
-        .filter(service => !allCategoryIds.includes(service.category));
-    }
-    
-    // Filter by search term
-    if (searchTerm) {
-      const normalizedSearchTerm = searchTerm
-        .toLowerCase()
-        .replace(/\s+/g, '')
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
-      filtered = filtered.map(cat => ({
-        ...cat,
-        services: cat.services.filter(service => {
-          const normalizedName = service.name
-            .toLowerCase()
-            .replace(/\s+/g, '')
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "");
-          
-          const normalizedPhones = service.phones.join(' ')
-            .toLowerCase()
-            .replace(/\s+/g, '');
+  const handleSearch = (searchTerm: string) => {
+    // Normalize Arabic text for better search
+    const normalizedSearchTerm = searchTerm
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
 
-          return normalizedName.includes(normalizedSearchTerm) ||
-                 normalizedPhones.includes(normalizedSearchTerm);
-        })
-      })).filter(cat => cat.services.length > 0);
-
-      // Also filter uncategorized services
-      uncategorized = uncategorized.filter(service => {
-        const normalizedName = service.name
-          .toLowerCase()
-          .replace(/\s+/g, '')
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "");
-        
-        const normalizedPhones = service.phones.join(' ')
-          .toLowerCase()
-          .replace(/\s+/g, '');
-
-        return normalizedName.includes(normalizedSearchTerm) ||
-               normalizedPhones.includes(normalizedSearchTerm);
-      });
-    }
-    
-    setFilteredData(filtered);
-    setUncategorizedServices(uncategorized);
+    setSearchQuery(normalizedSearchTerm);
   };
 
   const handleCall = (phone: string) => {
@@ -101,7 +53,7 @@ export default function ServicesList() {
 
   const renderServiceCard = (service: Service) => (
     <div key={service.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md mb-4 sm:hidden">
-      <h3 className="font-bold mb-2 dark:text-gray-100">{service.name}</h3>
+      <h3 className="font-bold mb-2 text-gray-900 dark:text-gray-100">{service.name}</h3>
       <div className="space-y-2">
         <div>
           <span className="text-gray-600 dark:text-gray-400 text-sm">رقم الهاتف:</span>
@@ -109,19 +61,51 @@ export default function ServicesList() {
         </div>
         <div>
           <span className="text-gray-600 dark:text-gray-400 text-sm">خدمة التوصيل:</span>
-          <div className="mt-1 dark:text-gray-200">{service.hasDelivery ? 'نعم' : 'لا'}</div>
+          <div className="mt-1 text-gray-900 dark:text-gray-200">
+            {service.hasDelivery ? 'نعم' : 'لا'}
+          </div>
         </div>
       </div>
     </div>
   );
 
+  const filteredServices = servicesData
+    .map(category => ({
+      ...category,
+      services: category.services.filter(service => {
+        const normalizedName = service.name
+          .toLowerCase()
+          .replace(/\s+/g, '')
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+        
+        const normalizedPhones = service.phones.join(' ')
+          .toLowerCase()
+          .replace(/\s+/g, '');
+
+        const matchesSearch = !searchQuery || 
+          normalizedName.includes(searchQuery) ||
+          normalizedPhones.includes(searchQuery);
+
+        const matchesCategory = selectedCategory === 'all' || 
+          category.id === selectedCategory;
+
+        return matchesSearch && matchesCategory;
+      })
+    }))
+    .filter(category => category.services.length > 0);
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <SearchFilter onSearch={handleSearch} />
+      <SearchFilter 
+        onSearch={handleSearch}
+        onCategoryChange={setSelectedCategory}
+        categories={servicesData}
+      />
       <div className="max-w-6xl mx-auto px-4">
-        {filteredData.map((category) => (
+        {filteredServices.map((category) => (
           <div key={category.id} className="mb-8">
-            <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100 font-amiri">
               {category.name}
             </h2>
             
@@ -140,18 +124,20 @@ export default function ServicesList() {
                 <table className="w-full">
                   <thead>
                     <tr className="bg-gray-50 dark:bg-gray-700">
-                      <th className="p-3 text-right text-gray-900 dark:text-gray-100">الاسم</th>
-                      <th className="p-3 text-right text-gray-900 dark:text-gray-100">رقم الهاتف</th>
-                      <th className="p-3 text-right text-gray-900 dark:text-gray-100">خدمة التوصيل</th>
+                      <th className="p-3 text-right text-gray-900 dark:text-gray-100 font-amiri">الاسم</th>
+                      <th className="p-3 text-right text-gray-900 dark:text-gray-100 font-amiri">رقم الهاتف</th>
+                      <th className="p-3 text-right text-gray-900 dark:text-gray-100 font-amiri">خدمة التوصيل</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="font-amiri">
                     {category.services.map((service) => (
-                      <tr key={service.id} className="border-b dark:border-gray-700 hover:bg-gray-50 
-                                                    dark:hover:bg-gray-700/50">
-                        <td className="p-3 dark:text-gray-200">{service.name}</td>
+                      <tr key={service.id} 
+                          className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td className="p-3 text-gray-900 dark:text-gray-200">{service.name}</td>
                         <td className="p-3">{renderPhoneNumbers(service.phones, service.id)}</td>
-                        <td className="p-3 dark:text-gray-200">{service.hasDelivery ? 'نعم' : 'لا'}</td>
+                        <td className="p-3 text-gray-900 dark:text-gray-200">
+                          {service.hasDelivery ? 'نعم' : 'لا'}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
