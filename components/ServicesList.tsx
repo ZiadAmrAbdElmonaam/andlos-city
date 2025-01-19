@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { servicesData } from '@/data/services';
 import SearchFilter from './SearchFilter';
 import { ServiceCategory, Service } from '@/types/services';
@@ -76,11 +76,11 @@ export default function ServicesList() {
     window.location.href = `tel:${phone.replace(/\s+/g, '')}`;
   };
 
-  const renderPhoneNumbers = (phones: string[]) => {
+  const renderPhoneNumbers = (phones: string[], serviceId: number) => {
     return (
       <div className="flex flex-col gap-1">
         {phones.map((phone, index) => (
-          <div key={index} className="flex items-center gap-2">
+          <div key={`${serviceId}-${index}`} className="flex items-center gap-2">
             <span className="font-mono text-sm sm:text-base dark:text-gray-200">{phone}</span>
             {phone !== 'عن طريق التطبيق' && (
               <button 
@@ -100,12 +100,12 @@ export default function ServicesList() {
   };
 
   const renderServiceCard = (service: Service) => (
-    <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md mb-4 sm:hidden">
+    <div key={service.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md mb-4 sm:hidden">
       <h3 className="font-bold mb-2 dark:text-gray-100">{service.name}</h3>
       <div className="space-y-2">
         <div>
           <span className="text-gray-600 dark:text-gray-400 text-sm">رقم الهاتف:</span>
-          <div className="mt-1">{renderPhoneNumbers(service.phones)}</div>
+          <div className="mt-1">{renderPhoneNumbers(service.phones, service.id)}</div>
         </div>
         <div>
           <span className="text-gray-600 dark:text-gray-400 text-sm">خدمة التوصيل:</span>
@@ -127,7 +127,11 @@ export default function ServicesList() {
             
             {/* Mobile View */}
             <div className="sm:hidden">
-              {category.services.map((service) => renderServiceCard(service))}
+              {category.services.map((service) => (
+                <div key={service.id}>
+                  {renderServiceCard(service)}
+                </div>
+              ))}
             </div>
 
             {/* Desktop View */}
@@ -146,7 +150,7 @@ export default function ServicesList() {
                       <tr key={service.id} className="border-b dark:border-gray-700 hover:bg-gray-50 
                                                     dark:hover:bg-gray-700/50">
                         <td className="p-3 dark:text-gray-200">{service.name}</td>
-                        <td className="p-3">{renderPhoneNumbers(service.phones)}</td>
+                        <td className="p-3">{renderPhoneNumbers(service.phones, service.id)}</td>
                         <td className="p-3 dark:text-gray-200">{service.hasDelivery ? 'نعم' : 'لا'}</td>
                       </tr>
                     ))}
@@ -166,7 +170,11 @@ export default function ServicesList() {
             
             {/* Mobile View */}
             <div className="sm:hidden">
-              {uncategorizedServices.map((service) => renderServiceCard(service))}
+              {uncategorizedServices.map((service) => (
+                <div key={service.id}>
+                  {renderServiceCard(service)}
+                </div>
+              ))}
             </div>
 
             {/* Desktop View */}
@@ -185,7 +193,7 @@ export default function ServicesList() {
                       <tr key={service.id} className="border-b dark:border-gray-700 hover:bg-gray-50 
                                                     dark:hover:bg-gray-700/50">
                         <td className="p-3 dark:text-gray-200">{service.name}</td>
-                        <td className="p-3">{renderPhoneNumbers(service.phones)}</td>
+                        <td className="p-3">{renderPhoneNumbers(service.phones, service.id)}</td>
                         <td className="p-3 dark:text-gray-200">{service.hasDelivery ? 'نعم' : 'لا'}</td>
                       </tr>
                     ))}
