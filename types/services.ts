@@ -4,6 +4,7 @@ export interface Service {
   phones: string[];
   category: string;
   hasDelivery: boolean;
+  address?: string;
 }
 
 export interface ServiceCategory {

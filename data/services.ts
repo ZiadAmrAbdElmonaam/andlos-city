@@ -33,6 +33,14 @@ export const servicesData: ServiceCategory[] = [
     name: 'سوبر ماركت',
     services: [
       {
+        id: 1,
+        name: 'سوبر ماركت نجمه هيليوبولس',
+        phones: ['15846'],
+        category: 'supermarkets',
+        hasDelivery: true,
+        address: 'محور الدكتور محمود فوزي من التسعين الجنوبي'
+      },
+      {
         id: 13,
         name: 'سوبر ماركت وشحن كهرباء أنوار المحمدية',
         phones: ['01095875269'],
@@ -82,50 +90,50 @@ export const servicesData: ServiceCategory[] = [
     services: [
       {
         id: 1,
-        name: 'طعم الرايق',
-        phones: ['01149508512', '0102204131225'],
+        name: 'مطعم الرايق',
+        phones: ['01022041312'],
         category: 'restaurants',
         hasDelivery: true
       },
       {
-        id: 24,
-        name: 'مطعم مأكولات شعبية (دار مصر) العاصمة',
+        id: 2,
+        name: 'مطعم الدادة دودي',
+        phones: ['01566666777'],
+        category: 'restaurants',
+        hasDelivery: true
+      },
+      {
+        id: 3,
+        name: 'مطعم مأكولات شعبية العاصمة',
         phones: ['01111233397'],
         category: 'restaurants',
         hasDelivery: true
       },
       {
-        id: 27,
-        name: 'مطعم مأكولات شعبية (الأندلس) بيانكي',
+        id: 4,
+        name: 'مطعم مأكولات شعبية بياني',
         phones: ['01098973440'],
         category: 'restaurants',
         hasDelivery: true
       },
       {
-        id: 28,
-        name: 'مطعم مأكولات شعبية (الفيدا مول) البازار',
+        id: 5,
+        name: 'مطعم مأكولات شعبية (الفيدا مول) الباز',
         phones: ['01008444166', '01222754030', '01006889991', '01222756040'],
         category: 'restaurants',
         hasDelivery: true
       },
       {
-        id: 29,
+        id: 6,
         name: 'كشري سيد حنفي',
         phones: ['16920'],
         category: 'restaurants',
         hasDelivery: true
       },
       {
-        id: 30,
+        id: 7,
         name: 'مطعم أبو علي السوري',
         phones: ['01140018119'],
-        category: 'restaurants',
-        hasDelivery: true
-      },
-      {
-        id: 31,
-        name: 'مطعم ابن الشام',
-        phones: ['15155'],
         category: 'restaurants',
         hasDelivery: true
       }
@@ -136,13 +144,33 @@ export const servicesData: ServiceCategory[] = [
     name: 'خضار وفاكهة',
     services: [
       {
-        id: 9,
-        name: 'خضار وفاكهة أولاد الحاج رجب',
-        phones: ['01279125522', '011564886000', '01019035866'],
+        id: 1,
+        name: 'خضار و فاكهة أولاد الحاج رجب',
+        phones: ['01019035866'],
         category: 'vegetables',
         hasDelivery: true
       },
-      // Add all vegetable stores...
+      {
+        id: 2,
+        name: 'خضار و فاكهة مكة',
+        phones: ['01119111372'],
+        category: 'vegetables',
+        hasDelivery: true
+      },
+      {
+        id: 3,
+        name: 'خضار و فاكهة أنوار المحمدية',
+        phones: ['01001827564'],
+        category: 'vegetables',
+        hasDelivery: true
+      },
+      {
+        id: 4,
+        name: 'خضار و فاكهة القناوي',
+        phones: ['01220704633'],
+        category: 'vegetables',
+        hasDelivery: true
+      }
     ]
   },
   {
@@ -189,6 +217,100 @@ export const servicesData: ServiceCategory[] = [
         name: 'أنابيب رمضان',
         phones: ['01125702123'],
         category: 'plumbing',
+        hasDelivery: true
+      }
+    ]
+  },
+  {
+    id: 'butcher',
+    name: 'جزارة',
+    services: [
+      {
+        id: 1,
+        name: 'الجزار مزارع تمام',
+        phones: ['01284169911'],
+        category: 'butcher',
+        hasDelivery: true
+      },
+      {
+        id: 2,
+        name: 'طيور و لحوم الطيبة',
+        phones: ['01555896967'],
+        category: 'butcher',
+        hasDelivery: true
+      },
+      {
+        id: 3,
+        name: 'طيور الفرار',
+        phones: ['01066230664'],
+        category: 'butcher',
+        hasDelivery: true
+      },
+      {
+        id: 4,
+        name: 'طيور نور الإسلام',
+        phones: ['01065249585'],
+        category: 'butcher',
+        hasDelivery: true
+      },
+      {
+        id: 5,
+        name: 'طيور المجزر',
+        phones: ['01121000054'],
+        category: 'butcher',
+        hasDelivery: true
+      }
+    ]
+  },
+  {
+    id: 'bakeries',
+    name: 'مخابز',
+    services: [
+      {
+        id: 1,
+        name: 'مخبز هايلاند',
+        phones: ['01010120411'],
+        category: 'bakeries',
+        hasDelivery: true
+      },
+      {
+        id: 2,
+        name: 'فطاير وعيش فلاحي اميه',
+        phones: ['01122898794'],
+        category: 'bakeries',
+        hasDelivery: true
+      }
+    ]
+  },
+  {
+    id: 'beauty',
+    name: 'تجميل',
+    services: [
+      {
+        id: 1,
+        name: 'بيوتي سنتر ابكر',
+        phones: ['01032346533'],
+        category: 'beauty',
+        hasDelivery: true
+      },
+      {
+        id: 2,
+        name: 'بيوتي سنتر سمر',
+        phones: ['01557157258'],
+        category: 'beauty',
+        hasDelivery: true
+      }
+    ]
+  },
+  {
+    id: 'tailoring',
+    name: 'تفصيل حريم',
+    services: [
+      {
+        id: 1,
+        name: 'أم جنة',
+        phones: ['01112355754'],
+        category: 'tailoring',
         hasDelivery: true
       }
     ]
