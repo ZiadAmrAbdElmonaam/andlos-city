@@ -12,9 +12,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ar" dir="rtl">
-      <body>
-        <header className="bg-slate-800 text-white p-4">
+    <html lang="ar" dir="rtl" className="light">
+      <body className="bg-gray-50 dark:bg-gray-900">
+        <header className="bg-slate-800 dark:bg-gray-950 text-white p-4">
           <nav className="max-w-6xl mx-auto">
             <ul className="flex justify-center gap-8">
               <li>
@@ -27,7 +27,7 @@ export default function RootLayout({
           </nav>
         </header>
         {children}
-        <footer className="bg-slate-800 text-white p-4 text-center">
+        <footer className="bg-slate-800 dark:bg-gray-950 text-white p-4 text-center">
           <p>جميع الحقوق محفوظة © 2024 - موقع الأندلس</p>
         </footer>
       </body>
