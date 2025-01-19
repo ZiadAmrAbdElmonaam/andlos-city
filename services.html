@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خدمات الأندلس</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="services.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="services.html">الخدمات</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1 class="services-title">خدمات الأندلس</h1>
+        
+        <div class="services-filter">
+            <input type="text" id="searchInput" placeholder="ابحث عن خدمة...">
+            <select id="categoryFilter">
+                <option value="all">كل الخدمات</option>
+                <option value="pharmacies">صيدليات</option>
+                <option value="restaurants">مطاعم</option>
+                <option value="supermarkets">سوبر ماركت</option>
+                <option value="maintenance">صيانة</option>
+            </select>
+        </div>
+
+        <div class="services-container">
+            <!-- Pharmacies Section -->
+            <div class="service-category" data-category="pharmacies">
+                <h2>الصيدليات</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الاسم</th>
+                            <th>رقم الهاتف</th>
+                            <th>خدمة التوصيل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>صيدلية السلطان</td>
+                            <td>01145184139 - 01091096528 - 01552292939</td>
+                            <td>نعم</td>
+                        </tr>
+                        <tr>
+                            <td>صيدلية دوس</td>
+                            <td>01277772592</td>
+                            <td>نعم</td>
+                        </tr>
+                        <tr>
+                            <td>صيدلية Marieliez</td>
+                            <td>01121111602 - 01121111601 - 01121111600</td>
+                            <td>نعم</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Add more categories here -->
+        </div>
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2024 - موقع الأندلس</p>
+    </footer>
+
+    <script src="services.js"></script>
+</body>
+</html> 
