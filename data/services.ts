@@ -314,6 +314,61 @@ export const servicesData: ServiceCategory[] = [
         hasDelivery: true
       }
     ]
+  },
+  {
+    id: 'fish-restaurants',
+    name: 'مطاعم أسماك',
+    services: [
+      {
+        id: 1,
+        name: 'أمان دار مصر الأندلس',
+        phones: ['01113272038', '01200057772'],
+        category: 'fish-restaurants',
+        hasDelivery: true
+      },
+      {
+        id: 2,
+        name: 'شبكة وسنارة',
+        phones: ['01151830530'],
+        category: 'fish-restaurants',
+        hasDelivery: true
+      },
+      {
+        id: 3,
+        name: 'حلقة السمك',
+        phones: ['01069624422'],
+        category: 'fish-restaurants',
+        hasDelivery: true
+      },
+      {
+        id: 4,
+        name: 'سيوانا أسوان',
+        phones: ['00201065534661'],
+        category: 'fish-restaurants',
+        hasDelivery: true
+      },
+      {
+        id: 5,
+        name: 'أسماك العبور',
+        phones: ['01129162006'],
+        category: 'fish-restaurants',
+        hasDelivery: true
+      },
+      {
+        id: 6,
+        name: 'أسماك حنفي',
+        phones: ['01151600515'],
+        category: 'fish-restaurants',
+        hasDelivery: true
+      },
+      {
+        id: 7,
+        name: 'أسماك مراسي',
+        phones: ['01026447092', '01124503022', '01270365696'],
+        category: 'fish-restaurants',
+        hasDelivery: true
+      }
+    ]
   }
   // Add more categories here
 ]; 
